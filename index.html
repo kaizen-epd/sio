@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Redirecting...</title>
+  <script>
+    window.onload = function () {
+      // Ambil path setelah /sio/ di URL
+      let path = window.location.pathname.replace("/sio/", "");
+      
+      // Hapus "index.html" kalau ada
+      path = path.replace("index.html", "").replace(/^\/+|\/+$/g, "");
+
+      // Bangun URL tujuan
+      let target = "https://kaizen-sio.vercel.app/details";
+      if (path) {
+        target += "/" + path;
+      }
+
+      // Redirect
+      window.location.href = target;
+    };
+  </script>
+</head>
+<body>
+  <p>Redirecting...</p>
+</body>
+</html>
