@@ -5,20 +5,39 @@
   <title>Redirecting...</title>
   <script>
     window.onload = function () {
-      // Ambil path setelah /sio/ di URL
+      // Ambil path setelah /sio/
       let path = window.location.pathname.replace("/sio/", "");
-      
-      // Hapus "index.html" kalau ada
       path = path.replace("index.html", "").replace(/^\/+|\/+$/g, "");
 
-      // Bangun URL tujuan
+      // Ambil semua query params
+      const params = new URLSearchParams(window.location.search);
+      const noreg = params.get("noreg");
+
+      // Hapus noreg dari query string biar gak dobel
+      if (noreg) {
+        params.delete("noreg");
+      }
+
+      // Base target
       let target = "https://kaizen-sio.vercel.app/details";
-      if (path) {
+
+      // Urutan prioritas:
+      // 1. kalau ada noreg → pakai itu
+      // 2. kalau gak ada, pakai path biasa
+      if (noreg) {
+        target += "/" + noreg;
+      } else if (path) {
         target += "/" + path;
       }
 
+      // Tambahin query string kalau masih ada sisa
+      const rest = params.toString();
+      if (rest) {
+        target += "?" + rest;
+      }
+
       // Redirect
-      window.location.href = target;
+      window.location.replace(target);
     };
   </script>
 </head>
